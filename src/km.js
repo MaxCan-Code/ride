@@ -348,7 +348,7 @@
         (h && h[x]) ? h.execCommand(x) : $.alert(`Command ${x} not implemented.`);
     });
   };
-  ('CLS CBP MA AC VAL indentOrComplete indentMoreOrAutocomplete STL TVO TVB'
+  ('CLS CBP MA AC TP VAL indentOrComplete indentMoreOrAutocomplete STL TVO TVB'
   + ' TGC JBK JSC LOG WSE').split(' ').forEach(defCmd);
   for (let i = 0; i < C.length; i++) {
     if (C[i]) {
@@ -396,7 +396,7 @@
         if (cmd === 'FX') { fxkbs.push(nkc); return; }
         if (cmd === 'ER') {
           cond = 'tracer && !editorHasMultipleSelections && !findInputFocussed && !inSnippetMode';
-        } else if (cmd === 'TC') {
+        } else if (cmd === 'TC' || cmd === 'TP') {
           cond = 'tracer';
         } else if (cmd === 'LL' || cmd === 'RL') {
           cond = '!suggestWidgetVisible && !findInputFocussed';

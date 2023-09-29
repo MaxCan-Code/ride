@@ -213,7 +213,9 @@ When the user presses `<ER>` (Enter) or `<TC>` (Ctrl-Enter), RIDE sends
 ["Execute",{"text":"      1 2 3+4 5 6","trace":1}] // RIDE -> Interpreter
 ```
 * `text`: the APL code to evaluate
-* `trace`: 0 or 1, whether the expression should be evaluated in the tracer (`<TC>`)
+* `trace`: 0 = execute
+           1 = evaluate in the tracer (`<TC>`)
+           2 = evaluate in the tracer token by token (`<TP>`)
 
 Note that RIDE can't assume that everything entered in the session will be echoed, e.g. quote quad input (`⍞`) doesn't
 echo.  Therefore, RIDE should wait for the [`EchoInput`](#EchoInput) message.
@@ -342,9 +344,10 @@ In response the interpreter will send a CloseWindow messsage for each window tha
 The following messages are used in relation to trace windows.
 
 ### SetHighlightLine <a name=SetHighlightLine></a>
-This tells RIDE where the currently executed line is.  Traditionally that's indicated by a red border around it.
+This tells RIDE where the currently executed line is. Traditionally that's indicated by a red border around it.
+Optionally, provides start and length of token to highlight with `tbt_start` and `tbt_len`.
 ```json
-["SetHighlightLine",{"win":123,"line":45}] // Interpreter -> RIDE
+["SetHighlightLine",{"win":123,"line":45, "tbt_start": 3, "tbt_len": 1}] // Interpreter -> RIDE
 ```
 
 ### SetLineAttributes <a name=SetLineAttributes></a>
@@ -416,6 +419,12 @@ Request the current line in a trace window is executed. (Step over)
 ["StepInto",{"win":123}] // RIDE -> Interpreter
 ```
 Request the current line in a trace window is executed. (Step into)
+
+### TraceToken <a name=TraceToken></a>
+```json
+["TraceToken",{"win":123}] // RIDE -> Interpreter
+```
+Request the current line in a trace window is executed token but token.
 
 
 ## Status Bar
